@@ -3,13 +3,13 @@ FROM php:8.2-apache
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install required PHP extensions (only what's missing)
-RUN docker-php-ext-install pdo_mysql mysqli intl
+# Install and enable required PHP extensions
+RUN docker-php-ext-install intl \
+    && docker-php-ext-enable pdo_mysql mysqli intl
 
-# Copy source code
+# Copy app code
 COPY . /var/www/html
 
-# Set working directory
 WORKDIR /var/www/html
 
 # Set writable folder permissions
